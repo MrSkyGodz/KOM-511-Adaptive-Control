@@ -27,5 +27,6 @@ for i = 1:iter
 end
 
 % plot_data(data.(name));
+% plot_all_data(data);
 
 
