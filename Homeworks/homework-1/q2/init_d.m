@@ -6,7 +6,7 @@ sample_time = 0.001;
 simTime = 200;
 
 b = 1;
-gamma = 2;
-sineAmp = 20;
+gamma = 1;
+sineAmp = 1000;
 
 out = sim(modelName);
