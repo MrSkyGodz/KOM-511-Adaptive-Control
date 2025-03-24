@@ -2,14 +2,16 @@
 clear; clc;
 
 modelName = "model";
+
 sample_time = 0.01;
 simTime = 30;
-iter = 5
+iter = 1;
 k0 = 2;
+gamma_start_val = 0.25;
 
 
 for i = 1:iter
-    gamma = 0.25*2^(i-1)/2;
+    gamma = gamma_start_val*2^(i-1)/2;
     
     out = sim(modelName);
     
