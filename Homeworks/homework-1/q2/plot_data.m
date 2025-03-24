@@ -6,11 +6,6 @@ function  plot_data(data)
     plot(data.uc,"DisplayName","Uc");
     legend()
     grid;
-    figure(2);
-    hold on;
-    plot(data.model,"DisplayName","Model Theta");
-    plot(data.theta,"DisplayName","Simulink Theta");
-    legend()
-    grid;
+
 end
 

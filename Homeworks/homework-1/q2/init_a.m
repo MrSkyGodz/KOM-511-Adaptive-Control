@@ -12,10 +12,10 @@ loss_function_selector = 0;
 gamma = 1;
 sineAmp = 1;
 
-iter = 11;
+iter = 6;
 
 for i = 1:iter
-    gamma = 0.05*2^(i-1)/2;
+    gamma = 1.6*2^(i-1)/2;
     
     out = sim(modelName);
     
