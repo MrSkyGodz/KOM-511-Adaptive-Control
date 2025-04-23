@@ -6,7 +6,8 @@ a = rand*10;
 b = rand*10;
 
 %% ADAPTATION PARAMETER
-gamma = 1;
+gamma1 = 1;
+gamma2 = 1;
 
 %% RUN SIMULATION
 sampling_time = 0.01;
