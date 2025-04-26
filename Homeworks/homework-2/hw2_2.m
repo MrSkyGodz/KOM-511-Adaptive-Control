@@ -33,7 +33,7 @@ sampling_time = 0.01;
 
 modelName = "hw2_2_mdl.slx";
 
-simTime = 100;
-inputMagnitude = 1;
+simTime = 50;
+inputMagnitude = 10;
 
 sim(modelName);

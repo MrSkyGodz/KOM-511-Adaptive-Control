@@ -14,7 +14,7 @@ sampling_time = 0.01;
 
 modelName = "hw2_1_mdl.slx";
 
-simTime = 100;
-inputMagnitude = 1;
+simTime = 200;
+inputMagnitude = 0.1;
 
 sim(modelName);
