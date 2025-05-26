@@ -20,3 +20,10 @@ den = den{1};
 Am = den;
 Ao = [1 -0.15]; %faster pole than Am
 X = [1 0.01]; %integral pole
+
+theta_hat_init = [0.5 0.6 0.7 0.8];
+% theta_hat_init = [1 1 1 1];
+P0_init = eye(4)*1000;
+lambda = 0.9;
+
+sim("hw4_a_model.slx")
