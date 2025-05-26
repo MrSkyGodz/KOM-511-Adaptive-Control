@@ -32,7 +32,7 @@ C = [ 0 1 0 ;
 %% ---------- 2) passification via LMI -------------------
 g = sqrt(2)/2 * [1;1];         % ‖g‖ = 1
 
-[P,theta_star,eps_val,k_star] = compute_passification_v3(A,B,C,g); % k_grid and eps_grid selection CRITICAL !!!
+[P,theta_star,eps_val,k_star] = compute_passification(A,B,C,g); % k_grid and eps_grid selection CRITICAL !!!
 
 fprintf('Passification successful:\n  eps = %.4f\n  theta_star = [%g %g]^T\n  k_star = %.4f\n', ...
          eps_val, theta_star, k_star);
@@ -83,7 +83,7 @@ p.alpha=alpha; p.gamma=gamma; p.sigma=sigma; p.theta_n=theta_n;
 p.c_gamma=c_gamma; p.c_w=c_w; p.c_e=c_e; p.eps_sw=eps_sw;
 p.lambda_P=lambda_P; p.zeta=zeta;
 
-sched = build_switch_schedule_v3(p);
+sched = build_switch_schedule(p);
 
 fprintf('# of switches found: %d (0..%d)\n',length(sched.mu)-1,length(sched.mu)-1);
 
