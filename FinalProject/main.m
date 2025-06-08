@@ -58,7 +58,7 @@ quantize = @(y,mu) min( max(y, -mu*M),  mu*M ) ...
 V0       = 1e3;                        % başlangıç ellipsoidi
 mu0      = 1;                          % başlangıç zoom
 delta    = 2;                          % Thm-2 deki δ
-zeta     = 0.05;                       % Vi < V_inf+ζ durdurma toleransı
+zeta     = 2*0.05;                       % Vi < V_inf+ζ durdurma toleransı
 gamma = 1e3;                           % high adaptation gain (paper)
 Delta_w = 0.1;                         % disturbance bound
 
