@@ -1,4 +1,4 @@
-function sched = build_switch_schedule_v3(params)
+function sched = build_switch_schedule(params)
 % params: struct (mu0,V0,Delta_e,Delta_w,alpha,gamma,sigma,theta_n,...
 %                 c_gamma,c_w,c_e,eps_sw,lambda_P,zeta)
 

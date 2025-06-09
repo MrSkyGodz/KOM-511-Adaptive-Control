@@ -1,15 +1,8 @@
-function [P,theta_star,eps_used, k_star] = compute_passification_v3(A,B,C,g)
+function [P,theta_star,eps_used, k_star] = compute_passification(A,B,C,g,k_grid,eps_grid)
 % Automatic passification search   (lineer SDP)
 % Returns P > 0, theta_star = k*g, and chosen eps_used
 
 n = size(A,1);
-
-% k_grid   = logspace(-3,3,120);       % 0.001 … 1000
-% k_grid   = logspace(0,1,100);
-k_grid   = 5.3;
-% eps_grid = [0.02 0.05 0.1 0.2 0.5];  % candidate ε values
-% eps_grid = [1 2 5 8 10];  % candidate ε values
-eps_grid = [0.25 0.3 0.4 0.5 0.6];  % candidate ε values
 
 P = []; theta_star = []; eps_used = [];
 

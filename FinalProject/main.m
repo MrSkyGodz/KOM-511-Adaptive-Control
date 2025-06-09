@@ -7,7 +7,7 @@
 %  Selivanov-Fradkov-Liberzon (Sys.&Contr.Lett. 88, 2016) – Example, Sec. 5
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-clear; clc; close all;
+clear; clc; clf;
 
 addpath(genpath("yalmip")); yalmip('clear');
 addpath(genpath("sedumi"))
@@ -32,7 +32,25 @@ C = [ 0 1 0 ;
 %% ---------- 2) passification via LMI -------------------
 g = sqrt(2)/2 * [1;1];         % ‖g‖ = 1
 
-[P,theta_star,eps_val,k_star] = compute_passification(A,B,C,g); % k_grid and eps_grid selection CRITICAL !!!
+% % Initially, find the minimum k_star by setting eps small.
+% k_grid   = logspace(-3,3,50);     % 0.001 … 1000
+% eps_grid = 0.03;
+% % finds k_star = 1.1514
+
+% k_grid   = 2;
+% eps_grid = 0.1;
+
+% k_grid   = 4;
+% eps_grid = 0.2;
+
+% k_grid   = 8;
+% eps_grid = 0.4;
+
+% Values selected in the paper.
+k_grid   = 5.3;
+eps_grid = 0.25;
+
+[P,theta_star,eps_val,k_star] = compute_passification(A,B,C,g,k_grid,eps_grid); % k_grid and eps_grid selection CRITICAL !!!
 
 fprintf('Passification successful:\n  eps = %.4f\n  theta_star = [%g %g]^T\n  k_star = %.4f\n', ...
          eps_val, theta_star, k_star);
@@ -96,20 +114,9 @@ a_vec = round(sched.a, 3);
 switch_table = table((0:length(mu_vec)-1)', t_switch(1:end-1)', V_vec', mu_vec', a_vec', ...
     'VariableNames', {'i','t_i','V_i','mu_i','a_i'})
 
-% t_switch = [  0     91.826  156.238 193.311 inf];
-% mu_vec   = [  1     0.185   0.052   0.042];
-% a_vec    = [300 49.029 4.056 2.595];
-% 
-% t_switch = [  0     91.826  120     156.238 175     193.311 inf];
-% mu_vec   = [  1     0.185   0.12    0.052   0.045   0.042];
-% a_vec    = [311     49.029 15      4.056   3       2.595];
-% 
-% t_switch = [  0     90.85   165.98  225.38  269.08  297.27  inf ];
-% mu_vec   = [  1     0.38    0.158   0.09    0.076   0.074          ];
-% a_vec    = [ 311.67 45.19   7.88    2.66    1.92    1.82           ];
-
 %% ---------- 5) simulation setup --------------------------------------
-tspan = [0 311];                       % seconds
+t_end = t_switch(end-1) + 10;
+tspan = [0 t_end];                       % seconds
 x0 = [ 3 ;  2 ;  0 ];                  % pick any IC s.t. V<1000
 theta0 = [0;0];                        % initial gain estimate
 IC = [x0 ; theta0];                    % total state vector
@@ -122,7 +129,7 @@ odefun = @(t,state) yaw_adaptive_ode(t,state,A,B,C,g,P,...
                                      t_switch,mu_vec,a_vec,...
                                      quantize,w_fun,gamma,Delta_e,M);
 
-opts = odeset('RelTol',1e-7,'AbsTol',1e-9);
+opts = odeset('RelTol',1e-1,'AbsTol',1e-2, 'MinStep', 0.001);
 [t,y] = ode45(odefun,tspan,IC,opts);
 
 %% ---------- 6) post-processing ---------------------------------------
@@ -139,15 +146,16 @@ end
 %% ---------- 7) plotting (replicates Fig. 1) ---------------------------
 figure(1); clf;
 subplot(2,1,1);
-plot(t, vecnorm(x,2,2),'LineWidth',1.2);
+x_norm = vecnorm(x,2,2);
+plot(t, x_norm,'LineWidth',1.2);
 xlabel('t [s]'); ylabel('‖x(t)‖_2');
 title('(a) state-vector norm');
-ylim([0 0.7]); xlim([0 311]);
+xlim([0 t_end]);
 grid on;
 
 subplot(2,1,2);
 plot(t, V,'LineWidth',1.2);
 xlabel('t [s]'); ylabel('V(x,\theta)');
 title('(b) Lyapunov function');
-ylim([0 1.5]); xlim([0 311]);
+xlim([0 t_end]);
 grid on;
